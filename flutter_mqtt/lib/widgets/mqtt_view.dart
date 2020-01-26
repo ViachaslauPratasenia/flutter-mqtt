@@ -11,38 +11,20 @@ class MQTTView extends StatefulWidget {
 }
 
 class _MQTTViewState extends State<MQTTView> {
-  final TextEditingController _hostTextController = TextEditingController();
   final TextEditingController _messageTextController = TextEditingController();
-  final TextEditingController _topicTextController = TextEditingController();
   MQTTAppState currentAppState;
   MQTTManager manager;
 
   @override
   void initState() {
     super.initState();
-
-    /*
-    _hostTextController.addListener(_printLatestValue);
-    _messageTextController.addListener(_printLatestValue);
-    _topicTextController.addListener(_printLatestValue);
-     */
   }
 
   @override
   void dispose() {
-    _hostTextController.dispose();
     _messageTextController.dispose();
-    _topicTextController.dispose();
     super.dispose();
   }
-
-  /*
-  _printLatestValue() {
-    print("Second text field: ${_hostTextController.text}");
-    print("Second text field: ${_messageTextController.text}");
-    print("Second text field: ${_topicTextController.text}");
-  }
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +59,6 @@ class _MQTTViewState extends State<MQTTView> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: <Widget>[
-          _buildTextFieldWith(_hostTextController, 'Enter broker address',currentAppState.getAppConnectionState),
-          const SizedBox(height: 10),
-          _buildTextFieldWith(
-              _topicTextController, 'Enter a topic to subscribe or listen', currentAppState.getAppConnectionState),
-          const SizedBox(height: 10),
           _buildPublishMessageRow(),
           const SizedBox(height: 10),
           _buildConnecteButtonFrom(currentAppState.getAppConnectionState)
@@ -119,10 +96,6 @@ class _MQTTViewState extends State<MQTTView> {
     bool shouldEnable = false;
     if (controller == _messageTextController &&
         state == MQTTAppConnectionState.connected) {
-      shouldEnable = true;
-    } else if ((controller == _hostTextController &&
-        state == MQTTAppConnectionState.disconnected) || (controller == _topicTextController &&
-        state == MQTTAppConnectionState.disconnected)) {
       shouldEnable = true;
     }
     return TextField(
@@ -195,6 +168,7 @@ class _MQTTViewState extends State<MQTTView> {
       case MQTTAppConnectionState.disconnected:
         return 'Disconnected';
     }
+    return '';
   }
 
   void _configureAndConnect() {
