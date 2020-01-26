@@ -4,6 +4,11 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'MqttAppState.dart';
 
 class MQTTManager {
+  static const USER_1_NAME = 'user1';
+  static const USER_1_PASSWORD = '7F8Bp9AT';
+  static const USER_2_NAME = 'user2';
+  static const USER_2_PASSWORD = 'Gy7DHGtd';
+
   // Private instance of client
   final MQTTAppState _currentState;
   MqttClient _client;
@@ -24,7 +29,7 @@ class MQTTManager {
 
   void initializeMQTTClient() {
     _client = MqttClient(_host, _identifier);
-    _client.port = 18355;
+    _client.port = 18355; //only 1---- port
     _client.keepAlivePeriod = 20;
     _client.onDisconnected = onDisconnected;
     _client.secure = false;
@@ -51,7 +56,7 @@ class MQTTManager {
     try {
       print('EXAMPLE::Mosquitto start client connecting....');
       _currentState.setAppConnectionState(MQTTAppConnectionState.connecting);
-      await _client.connect('qtaurcso', 'qs3HxI08mwWk');
+      await _client.connect(USER_2_NAME, USER_2_PASSWORD);
     } on Exception catch (e) {
       print('EXAMPLE::client exception - $e');
       disconnect();

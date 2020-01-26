@@ -202,7 +202,7 @@ class _MQTTViewState extends State<MQTTView> {
     String osPrefix = 'Flutter_Android';
     manager = MQTTManager(
         host: 'hairdresser.cloudmqtt.com',
-        topic: 'flutter/amp/cool',
+        topic: 'flutter',
         identifier: osPrefix,
         state: currentAppState);
     manager.initializeMQTTClient();
